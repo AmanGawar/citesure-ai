@@ -5,6 +5,8 @@ anthropic
 python-dotenv
 streamlit
 groq
+torch
+torchvision
 tenacity
 fastapi
 uvicorn
