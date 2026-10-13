@@ -13,17 +13,15 @@ def client():
     global _client
 
     if _client is None:
-        api_key = os.getenv("GROQ_API_KEY")
+        key = os.getenv("GROQ_API_KEY")
 
-        if not api_key:
-            api_key = st.secrets.get("GROQ_API_KEY", "")
+        if not key:
+            key = st.secrets.get("GROQ_API_KEY", "")
 
-        if not api_key.strip():
-            raise RuntimeError(
-                "GROQ_API_KEY is missing from Streamlit Secrets."
-            )
+        if not key.strip():
+            raise RuntimeError("GROQ_API_KEY is missing from Streamlit Secrets.")
 
-        _client = Groq(api_key=api_key.strip())
+        _client = Groq(api_key=key.strip())
 
     return _client
 
@@ -42,7 +40,6 @@ def complete(system: str, user: str, max_tokens: int = 1200) -> str:
             {"role": "user", "content": user},
         ],
     )
-
     return response.choices[0].message.content or ""
 
 
