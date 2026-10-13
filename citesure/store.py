@@ -61,6 +61,30 @@ class PaperStore:
         for m in self.col.get(include=["metadatas"])["metadatas"]:
             p = seen.setdefault(m["paper_id"], {"paper_id": m["paper_id"], "title": m["title"], "chunks": 0})
             p["chunks"] += 1
+
+
+    def get_section_chunks(self, section: str, paper_ids=None):
+    chunks = self.get_chunks(paper_ids)
+    target = section.lower().strip()
+
+    aliases = {
+        "methodology": {"methodology", "method", "methods", "approach"},
+        "results": {"results", "experiments", "experiment"},
+        "limitations": {"limitations", "discussion"},
+        "conclusion": {"conclusion", "conclusions"},
+        "introduction": {"introduction", "background"},
+        "abstract": {"abstract"},
+    }
+
+    accepted = aliases.get(target, {target})
+
+    hits = [
+        h for h in chunks
+        if str(h["meta"].get("section", "")).lower().strip()
+        in accepted
+    ]
+
+    return sorted(hits, key=lambda h: h["meta"].get("page", 0))    
         return list(seen.values())
 
     def delete_paper(self, paper_id: str):
