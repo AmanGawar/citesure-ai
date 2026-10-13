@@ -12,7 +12,7 @@ def _flag(key: str) -> bool:
 
 @dataclass(frozen=True)
 class Settings:
-    llm_model: str = os.getenv("LLM_MODEL", "claude-sonnet-5-5")
+    llm_model = "openai/gpt-oss-20b"
     embed_model: str = os.getenv("EMBED_MODEL", "BAAI/bge-small-en-v1.5")
     chroma_dir: str = os.getenv("CHROMA_DIR", "data/chroma")
     upload_dir: str = os.getenv("UPLOAD_DIR", "data/papers")
