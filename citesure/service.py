@@ -9,6 +9,33 @@ from .store import PaperStore
 REWRITE_SYSTEM = ("Rewrite the user's last question as a standalone search query, resolving "
                   "pronouns using the conversation. Output only the query, nothing else.")
 
+SECTION_TERMS = {
+    "abstract": ["abstract"],
+    "introduction": ["introduction", "background"],
+    "methodology": ["methodology", "methods", "proposed method"],
+    "results": ["results", "experiments", "findings"],
+    "limitations": ["limitations", "threats to validity"],
+    "conclusion": ["conclusion", "concluding remarks"],
+}
+
+
+def detect_section(question):
+    q = question.lower().strip().rstrip("?.!")
+
+    patterns = {
+        "abstract": ["abstract"],
+        "introduction": ["introduction", "background section"],
+        "methodology": ["methodology", "methods used", "research design"],
+        "results": ["results", "findings", "experimental results"],
+        "limitations": ["limitations", "weaknesses", "threats to validity"],
+        "conclusion": ["conclusion", "concluding remarks"],
+    }
+
+    for section, phrases in patterns.items():
+        if any(p in q for p in phrases):
+            return section
+
+    return None
 
 def standalone(history, question: str) -> str:
     if not history:
