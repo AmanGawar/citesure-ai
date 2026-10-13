@@ -4,6 +4,8 @@ sentence-transformers
 anthropic
 python-dotenv
 streamlit
+groq
+tenacity
 fastapi
 uvicorn
 python-multipart
