@@ -1,0 +1,13 @@
+pymupdf
+chromadb
+sentence-transformers
+anthropic
+python-dotenv
+streamlit
+fastapi
+uvicorn
+python-multipart
+rank-bm25
+tenacity
+pytest
+pysqlite3-binary; sys_platform == "linux"
